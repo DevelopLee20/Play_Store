@@ -1,0 +1,313 @@
+// 위젯 사용을 위한 라이브러리 import
+import 'package:flutter/material.dart';
+// https://medium.com/@changjoopark/flutter-card-%EC%9C%84%EC%A0%AF%EC%97%90-%EB%A6%AC%ED%94%8C-%ED%9A%A8%EA%B3%BC-%EC%B6%94%EA%B0%80%ED%95%98%EA%B8%B0-f68fc4973a42
+
+// main 함수가 MyApp을 run 하도록 한다.
+void main() => runApp(MyApp());
+
+// main에서 run 하는 MyApp 클래스, RobiPage를 home으로 가지고 있다.
+class MyApp extends StatelessWidget {
+  @override // 메소드오버라이딩
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false, // debug 배너 삭제
+      title: '코드 콘서트', // 타이틀 지정
+      theme: ThemeData(
+          primarySwatch: Colors.red,
+          fontFamily:
+              'Chilgok'), // 테마를 빨간색으로 지정, font는 family를 Chilgok으로 지정한 폰트를 사용.
+      home: RobiPage(), // RobiPage를 home으로 가짐
+    );
+  }
+}
+
+class MainPage extends StatelessWidget {
+  // 탭을 나누는 페이지 클래스
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false, // debug 배너 삭제
+      theme: ThemeData(
+          primarySwatch: Colors.red, fontFamily: 'Chilgok'), // 위의 내용과 같음
+      home: DefaultTabController(
+        // 오후의 위젯에서 배운 DefaultTabController 위젯, 탭창을 생성할 수 있다.
+        length: 2, // 탭의 개수를 2개로 설정
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.white, // 뒷배경을 하얀색으로 설정 - 선택되지 않았을 때
+            elevation: 0, // 높이를 0으로 지정
+            bottom: TabBar(
+                unselectedLabelColor:
+                    Colors.redAccent, // 라벨색을 빨간색으로 설정 - 선택되었을 때
+                indicatorPadding:
+                    EdgeInsets.only(left: 30, right: 30), // 왼쪽과 오른쪽에 Padding을 줌
+                indicator: ShapeDecoration(
+                    color: Colors.redAccent,
+                    shape: BeveledRectangleBorder(
+                        side: BorderSide(
+                      color: Colors.redAccent,
+                    ))),
+                tabs: [
+                  Tab(
+                    child: Align(
+                      // 첫번째 탭창
+                      alignment: Alignment.center, // 중앙으로 정렬
+                      child: Text('코드'),
+                    ),
+                  ),
+                  Tab(
+                    child: Align(
+                      // 두번째 탭창
+                      alignment: Alignment.center, // 중앙으로 정렬
+                      child: Text('악보'),
+                    ),
+                  ),
+                ]),
+          ),
+          body: TabBarView(children: [
+            ButtonPage(), // 첫번째 탭에서 실행될 클래스
+            Icon(Icons.dangerous), // 두번째 탭에서 실행될 클래스
+          ]),
+        ),
+      ),
+    );
+  }
+}
+
+class ButtonPage extends StatelessWidget {
+  // 코드의 목록을 나타내는 클래스
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Center(
+            child: Column(children: <Widget>[
+      Row(
+          // 가로정렬
+          mainAxisAlignment: MainAxisAlignment.center, // 중앙으로 정렬
+          children: <Widget>[
+            InkWellCard(
+              // 아래에서 설명
+              onTap: () {
+                showDialog(
+                    // showDialog 위젯 - 클릭시 경고창 형식으로 이미지를 출력함
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                          content: Image.asset(
+                              'images/code_C.jpg'), // Image.asset으로 이미지를 불러옴 - 이때의 이미지는 yaml 파일에서 선언을 해주어야 함
+                          shape: RoundedRectangleBorder(
+                            // 둥근 사각형
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(2.0)), // 4방향의 모양을 깎음
+                          ));
+                    });
+              },
+              child: Container(
+                  // 사각형 박스형식
+                  padding: EdgeInsets.all(40.0), // 모든 방향의 여백을 40만큼 준다
+                  child: Text('C코드',
+                      textAlign:
+                          TextAlign.center)), // 텍스트를 출력하는데, 위젯의 중앙에 정렬되도록 한다.
+            ),
+            InkWellCard(
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                          content: Image.asset('images/code_D.jpg'),
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(2.0)),
+                          ));
+                    });
+              },
+              child: Container(
+                  padding: EdgeInsets.all(40.0),
+                  child: Text('D코드', textAlign: TextAlign.center)),
+            ),
+            InkWellCard(
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                          content: Image.asset('images/code_E.jpg'),
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(2.0)),
+                          ));
+                    });
+              },
+              child: Container(
+                  padding: EdgeInsets.all(40.0),
+                  child: Text('E코드', textAlign: TextAlign.center)),
+            ),
+          ]),
+      Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+        InkWellCard(
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                      content: Image.asset('images/code_F.jpg'),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(2.0)),
+                      ));
+                });
+          },
+          child: Container(
+              padding: EdgeInsets.all(40.0),
+              child: Text('F코드', textAlign: TextAlign.center)),
+        ),
+        InkWellCard(
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                      content: Image.asset('images/code_G.jpg'),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(2.0)),
+                      ));
+                });
+          },
+          child: Container(
+              padding: EdgeInsets.all(40.0),
+              child: Text('G코드', textAlign: TextAlign.center)),
+        ),
+        InkWellCard(
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                      content: Image.asset('images/code_A.jpg'),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(2.0)),
+                      ));
+                });
+          },
+          child: Container(
+              padding: EdgeInsets.all(40.0),
+              child: Text('A코드', textAlign: TextAlign.center)),
+        ),
+      ]),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          InkWellCard(
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                        content: Image.asset('images/code_B.jpg'),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(2.0)),
+                        ));
+                  });
+            },
+            child: Container(
+                padding: EdgeInsets.all(40.0),
+                child: Text('ㅁ코드', textAlign: TextAlign.center)),
+          ),
+          InkWellCard(
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                        content: Image.asset('images/code_B.jpg'),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(2.0)),
+                        ));
+                  });
+            },
+            child: Container(
+                padding: EdgeInsets.all(40.0),
+                child: Text('B코드', textAlign: TextAlign.center)),
+          ),
+          InkWellCard(
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                        content: Image.asset('images/code_B.jpg'),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(2.0)),
+                        ));
+                  });
+            },
+            child: Container(
+                padding: EdgeInsets.all(40.0),
+                child: Text('ㅁ코드', textAlign: TextAlign.center)),
+          ),
+        ],
+      )
+    ])));
+  }
+}
+
+class InkWellCard extends StatelessWidget {
+  // InkWellCard 클래스, Card와 onTap, InKWell, Container 기능을 모두 수행함
+  final VoidCallback onTap;
+  final Widget child;
+  final BorderRadius _baseBorderRadius = BorderRadius.circular(8);
+  InkWellCard({@required this.onTap, @required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: _baseBorderRadius),
+      child: InkWell(
+        borderRadius: _baseBorderRadius,
+        onTap: onTap,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: _baseBorderRadius,
+            color: Colors.transparent,
+          ),
+          child: child,
+        ),
+      ),
+    );
+  }
+}
+
+class RobiPage extends StatelessWidget {
+  // 앱 입장시 메인 화면을 출력하는 코드
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('코드 콘서트'), // 앱 바의 텍스트 출력
+      ),
+      body: Center(
+        child: Column(
+            // 기타 이미지와 글씨가 세로로 정렬됨
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Image.asset('images/guitar.jpg'), // 기타 이미지 출력
+              InkWell(
+                child: Text(
+                  // 텍스트의 크기는 30이며, 폰트는 Chilgok으로 저장된 폰트를 사용
+                  '기타 코드 보기',
+                  style: TextStyle(fontSize: 30, fontFamily: 'Chilgok'),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    // push를 통해서 InkWell 텍스트가 클릭되었을 때 MainPage를 실행시킴
+                    context,
+                    MaterialPageRoute(builder: (context) => MainPage()),
+                  );
+                },
+              )
+            ]),
+      ),
+    );
+  }
+}
